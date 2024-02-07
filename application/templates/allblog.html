@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog-data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .gt1 a {
+            font-size: 2vw;
+            color: whitesmoke;
+            margin-right: 3vw;
+            text-decoration: none;
+
+        }
+
+        .gt1 a:hover {
+            color: grey;
+
+        }
+    </style>
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+
+    <nav style="position: fixed ; width: 100%;top: 0;z-index: 1;" class="navbar bg-dark border-bottom border-body"
+        data-bs-theme="dark">
+        <!-- Navbar content -->
+        <div class="d-flex flex-row">
+            <h2
+                style="color: whitesmoke; padding-right: 30vw; font-size: 3vw; margin-left: 2vw; text-decoration: underline;">
+                My Blog
+            </h2>
+            <div class="gt1">
+                <a href="/home/">Home</a>
+                
+                <a href="{% url 'change_password' %}">Change Password</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+
+
+        </div>
+    </nav>
+    <div class="container alert alert-light" style="border-radius: 10px;margin-top: 15vh;margin-bottom: 10vh;">
+        <h2 class="container alert alert-success  text-center" style="text-decoration: underline;">
+            Blog Category - {{Data.category_name}}
+        </h2>
+        <div style="padding-left:  50%;">
+            <form class="d-flex" method="POST">
+                {% csrf_token %}
+                <select class="form-control" name="data" id="data">
+                    <option value="">Select Blog</option>
+                    {% for y in Category %}
+
+                    <option value="{{y.Blog_Name}}">{{y.Blog_Name}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="container alert alert-light" style=" border-radius: 15px;padding-top: 5vh;margin-top: 2vh; ">
+            {% if Category %}
+
+            <div class="d-flex flex-wrap justify-content-evenly">
+                {% for y in Category %}
+
+                <div class="alert alert-secondary"
+                    style=" border-radius: 15px;width: 25vw;padding-left: 1vw;padding-top: 1vh;padding-right: 1vw;margin-bottom: 5vh;padding-bottom: 1vh;">
+                    <img style="border-radius: 15px; height: 35vh;border: 1px solid whitesmoke;"
+                        src="{{ y.blog_img.url }}" class="card-img-top" alt="...">
+                    <div>
+                        <div
+                            style="border: 1px solid whitesmoke; background-color: burlywood; border-radius: 15px;min-height: 35vh;height: auto;width: auto;">
+                            <h5
+                                style="text-align: center; margin-top: 2vh; text-decoration: underline;color:darkblue ;">
+                                {{ y.Blog_Name }}
+                            </h5>
+                            <p style="padding-left: 1vw;padding-right: 1vw;">{{ y.blog_summary }}</p>
+                        </div>
+                        <footer style=" border-radius: 15px;margin: 0vh 2vw;padding-left: 5vw;margin-top: 2vh;">
+                            <a href="{% url 'View_blog' y.id   %}" class="btn btn-success">View Blogs</a>
+                        </footer>
+                    </div>
+                </div>
+
+
+                {% endfor %}
+            </div>
+            {% else %}
+
+            <h1 class="text-center">No Blog Found</h1>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+    <footer
+        style="background-color: black;padding-top: 2.5vh;padding-bottom: 2.5vh;position: fixed;bottom: 0;width: 100%;z-index: 1; ">
+        <a style="margin-left: 45vw;color: whitesmoke; margin-right: 3vw;" href="https://www.facebook.com"><i
+                class="bi bi-facebook"></i></a>
+        <a style="color: whitesmoke;" href="https://www.whatsapp.com"><i class="bi bi-whatsapp"></i></a>
+
+    </footer>
+
+    {% else %}
+
+    <div class="container alert alert-danger mt-4" style="border-radius: 10px;">
+        <h1 style="text-align: center;">You Need to First Login to access the page</h1>
+    </div>
+    <a class="btn btn-success" style="margin-left: 40vw;font-size: 3vw;" href="/">Login Page</a>
+    {% endif %}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

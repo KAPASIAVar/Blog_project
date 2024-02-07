@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-up-Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            width: 300px;
+            margin: 1vh auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container a {
+
+            color: black;
+            padding: 1px 1px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 1.5vw;
+        }
+
+        .login-container a:hover {
+            background-color: #ddd;
+            color: green;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        label {
+            font-size: 1.5vw;
+        }
+
+        form {
+            padding-top: 5vh;
+        }
+    </style>
+</head>
+
+<body>
+    {% if message %}
+    <div>
+        <h1 style="text-align: center;background-color: grey;color: #ddd;border-radius: 10px;padding: 2vh 0vw;text-decoration: underline;">{{message}}</h1>
+        
+    </div>
+    {% endif %}
+    <div class="login-container">
+        <h2 style="font-size: 4vw;text-decoration: underline;">Sign Up</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="">Email</label>
+            <input type="email" name="mail" id="mail" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <label for="">Confirm Password</label>
+            <input type="password" name="Confirm_password" id="Confirm_password" required>
+
+            <button onclick="Data(event)" class="btn btn-outline-success btn-lg" type="submit">Create Account</button>
+        </form>
+        <p id="message"></p>
+    </div>
+    {% if error %}
+    <div style="font-size: 3vw;" class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+    <script>
+         function  Data(e) {
+            if (document.getElementById('password').value ==
+                document.getElementById('Confirm_password').value) {
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'Password and confirm password do not match';
+                e.preventDefault();
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+       
+        <style>
+            .gt1 a {
+                font-size: 3vw;
+                color: whitesmoke;
+                margin-right: 3vw;
+                text-decoration: none;
+    
+            }
+    
+            .gt1 a:hover {
+                color: grey;
+    
+            }
+        </style>
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <!-- Navbar content -->
+        <div class="d-flex flex-row">
+            <h2
+                style="color: whitesmoke; padding-right: 15vw; font-size: 4vw; margin-left: 2vw; text-decoration: underline;">
+                My Blog
+            </h2>
+            <div class="gt1">
+                <a href="/home/">Home</a>
+                <a href="/input/">Contact</a>
+                <a href="{% url 'change_password' %}">Change Password</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+
+
+        </div>
+    </nav>
+    <div>
+        <h1 class="alert alert-success text-center" style="text-decoration: underline; font-size: 5vw;">Input Blog Data
+        </h1>
+    </div>
+    <div class="container alert alert-light">
+        {% if Category %}
+        <h2 class="alert alert-success text-center" style="text-decoration: underline;">
+            {{ Category }}
+        </h2>
+        {% endif %}
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="blog_name" class="form-label">Blog Name</label>
+                <input type="text" class="form-control" id="blogname" name="blogname" required>
+            </div>
+            <div class="mb-3">
+                <label for="blog_image">Blog Image</label><br><br>
+
+                <input type="file" name="img" accept="image/*">
+            </div>
+            <div class="mb-3">
+                <label for="blog_content" class="form-label">Blog Summary</label>
+                <textarea class="form-control" id="blog_content" name="blog_content" rows="3" maxlength="200"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="container alert alert-light" style="border-radius: 15px;">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.9680965748407!2d77.27924128885498!3d28.450378100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce0ab6fec0aab%3A0x87c9e10e1ae0b0fc!2sManav%20Rachna%20International%20Institute%20Of%20Research%20And%20Studies!5e0!3m2!1sen!2sin!4v1705471256083!5m2!1sen!2sin"
+            style="border:0; border-radius: 15px;margin-left: 5vw; width: 80vw;height: 60vh;" allowfullscreen=""
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <footer style="background-color: black;padding-top: 2.5vh;padding-bottom: 2.5vh;margin-top: 5vh; ">
+        <a style="margin-left: 45vw;color: whitesmoke; margin-right: 3vw;" href="https://www.facebook.com"><i
+                class="bi bi-facebook"></i></a>
+        <a style="color: whitesmoke;" href="https://www.whatsapp.com"><i class="bi bi-whatsapp"></i></a>
+
+    </footer>
+    {% else %}
+
+    <div class="container alert alert-danger mt-4" style="border-radius: 10px;">
+    <h1 style="text-align: center;">You Need to First Login to access the page</h1>
+    </div>
+    <a class="btn btn-success" style="margin-left: 40vw;font-size: 3vw;" href="/">Login Page</a>
+    {% endif %}
+</body>
+
+</html>

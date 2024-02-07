@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .gt1 a {
+            font-size: 2vw;
+            color: whitesmoke;
+            margin-right: 3vw;
+            text-decoration: none;
+
+        }
+
+        .gt1 a:hover {
+            color: grey;
+
+        }
+    </style>
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+    <nav style="position: fixed ; width: 100%;top: 0;z-index: 5;" class="navbar bg-dark border-bottom border-body"
+        data-bs-theme="dark">
+        <!-- Navbar content -->
+        <div class="d-flex flex-row">
+            <h2
+                style="color: whitesmoke; padding-right: 30vw; font-size: 3vw; margin-left: 2vw; text-decoration: underline;">
+                My Blog
+            </h2>
+            <div class="gt1">
+                <a href="/home/">Home</a>
+                
+                <a href="{% url 'change_password' %}">Change Password</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+
+
+        </div>
+
+    </nav>
+
+    <div id="carouselExampleIndicators" class="container alert alert-light carousel slide"
+        style="border-radius: 15px; margin-top: 10%;">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://media.istockphoto.com/id/922745190/photo/blogging-blog-concepts-ideas-with-worktable.jpg?s=1024x1024&w=is&k=20&c=47-y8UPbITvHDInivDBKJJiTMzO6Ds78N2UHQUjQZqk="
+                    class="container d-block w-100" alt="..." style="height: 60vh;border-radius: 15px;">
+            </div>
+            <div class="carousel-item">
+                <img src="https://cdn.pixabay.com/photo/2015/05/31/10/55/man-791049_1280.jpg"
+                    class="container d-block w-100" alt="..." style="height: 60vh;border-radius: 15px;">
+            </div>
+            <div class="carousel-item">
+                <img src="https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
+                    class="container d-block w-100" alt="..." style="height: 60vh;border-radius: 15px;">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="container">
+        <h3 style="background-color: grey; border-radius: 15px; text-decoration: underline; color: whitesmoke; font-size: 5vw; text-align: center;
+        margin-top: 5vh;margin-bottom: 2vh; padding-top: 3vh; padding-bottom: 3vh;">Blogs Categories</h3>
+        <div style="padding-left:  50%;">
+            <form class="d-flex" method="POST">
+                {% csrf_token %}
+                <select class="form-control" name="data" id="data">
+                    <option value="">Select Category</option>
+                    {% for y in category %}
+
+                    <option value="{{y.category_name}}">{{y.category_name}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container alert alert-light" style=" border-radius: 15px;padding-top: 5vh;margin-top: 3vh; ">
+        {% if category %}
+        <div class="d-flex flex-wrap justify-content-evenly">
+            {% for y in category %}
+            <div class="alert alert-secondary"
+                style=" border-radius: 15px;width: 30%;padding-left: 1vw;padding-top: 1vh;padding-right: 1vw;margin-bottom: 5vh;padding-bottom: 1vh;">
+                <img style="border-radius: 15px; height: 35vh;border: 1px solid whitesmoke;" src="{{ y.blog_img.url }}"
+                    class="card-img-top" alt="...">
+                <div>
+                    <div
+                        style="border: 1px solid whitesmoke; background-color: burlywood; border-radius: 15px;min-height: 35vh;height: auto;width: auto;">
+                        <h5 style="text-align: center; margin-top: 2vh; text-decoration: underline;color:brown ;">
+                            {{y.category_name }}
+                        </h5>
+                        <p style="padding-left: 1vw;padding-right: 1vw;">{{ y.blog_summary }}</p>
+                    </div>
+                    <footer style=" border-radius: 15px;margin: 0vh 2vw;padding-left: 5vw;margin-top: 2vh;">
+                        <a href="{% url 'Blog'  y.id   y.category_name   %}" class="btn btn-success">View Blogs</a>
+                    </footer>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+    <div class="container alert alert-light" style="border-radius: 15px;margin-bottom: 10vh;">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.9680965748407!2d77.27924128885498!3d28.450378100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce0ab6fec0aab%3A0x87c9e10e1ae0b0fc!2sManav%20Rachna%20International%20Institute%20Of%20Research%20And%20Studies!5e0!3m2!1sen!2sin!4v1705471256083!5m2!1sen!2sin"
+            style="border:0; border-radius: 15px;margin-left: auto;margin-right: auto;   width: 100%;height: 60vh;"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <footer
+        style="background-color: black;padding-top: 2.5vh;padding-bottom: 2.5vh;position: fixed;bottom: 0;width: 100%;z-index: 1; ">
+        <a style="margin-left: 45vw;color: whitesmoke; margin-right: 3vw;" href="https://www.facebook.com"><i
+                class="bi bi-facebook"></i></a>
+        <a style="color: whitesmoke;" href="https://www.whatsapp.com"><i class="bi bi-whatsapp"></i></a>
+
+    </footer>
+    {% else %}
+    <div class="container alert alert-danger mt-4" style="border-radius: 15px;">
+        <h1 style="text-align: center;">You Need to First Login to access the page</h1>
+    </div>
+    <a class="btn btn-success" style="margin-left: 40vw;font-size: 3vw;" href="/">Login Page</a>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
