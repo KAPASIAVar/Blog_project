@@ -36,7 +36,7 @@
             </h2>
             <div class="gt1">
                 <a href="/home/">Home</a>
-                
+
                 <a href="{% url 'change_password' %}">Change Password</a>
                 <a href="{% url 'logout' %}">Logout</a>
             </div>
@@ -99,26 +99,30 @@
         </div>
     </div>
 
-    <div class="container alert alert-light" style=" border-radius: 15px;padding-top: 5vh;margin-top: 3vh; ">
+    <div class="container alert alert-light" style=" border-radius: 15px;padding-top: 5vh;">
         {% if category %}
         <div class="d-flex flex-wrap justify-content-evenly">
             {% for y in category %}
             <div class="alert alert-secondary"
-                style=" border-radius: 15px;width: 30%;padding-left: 1vw;padding-top: 1vh;padding-right: 1vw;margin-bottom: 5vh;padding-bottom: 1vh;">
-                <img style="border-radius: 15px; height: 35vh;border: 1px solid whitesmoke;" src="{{ y.blog_img.url }}"
-                    class="card-img-top" alt="...">
-                <div>
-                    <div
-                        style="border: 1px solid whitesmoke; background-color: burlywood; border-radius: 15px;min-height: 35vh;height: auto;width: auto;">
-                        <h5 style="text-align: center; margin-top: 2vh; text-decoration: underline;color:brown ;">
-                            {{y.category_name }}
-                        </h5>
-                        <p style="padding-left: 1vw;padding-right: 1vw;">{{ y.blog_summary }}</p>
-                    </div>
-                    <footer style=" border-radius: 15px;margin: 0vh 2vw;padding-left: 5vw;margin-top: 2vh;">
-                        <a href="{% url 'Blog'  y.id   y.category_name   %}" class="btn btn-success">View Blogs</a>
-                    </footer>
+                style=" border-radius: 15px;width: 30%;height: auto; padding-left: 1vw;padding-top: 1vh;padding-right: 1vw;padding-bottom: 3vh;">
+                <img style="border-radius: 15px;width: 100%;height: 40%; border: 1px solid whitesmoke;"
+                    src="{{ y.blog_img.url }}" class="card-img-top" alt="...">
+
+                <div
+                    style="border: 1px solid whitesmoke; background-color: burlywood; border-radius: 15px;width: 100%;height: 50%;min-height: 55%;">
+                    <h5
+                        style="text-align: center; margin-top: 2vh; text-decoration: underline;color:brown ;font-size: 2vw;">
+                        {{y.category_name }}
+                    </h5>
+
+                    <p style="padding-left: 1vw;padding-right: 1vw;font-size: 1.5vw;">{{ y.blog_summary }}</p>
                 </div>
+                <center>
+
+                    <a  style="font-size: 1.2vw;height: auto;width: auto;" href="{% url 'Blog'  y.id   y.category_name   %}"
+                        class="btn btn-success">View Blogs</a>
+                </center>
+
             </div>
             {% endfor %}
         </div>
