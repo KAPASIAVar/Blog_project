@@ -83,7 +83,7 @@
             <form method="POST">
                 {% csrf_token %}
                 <p>Add Comment</p>
-                <textarea class="alert alert-secondary" name="comment" id="comment" cols="50" rows="5"
+                <textarea class="alert alert-secondary" style="width: 100%;height: 20vh;" name="comment" id="comment"
                     placeholder="Write Any Comment here" required></textarea><br>
                 <button class="btn btn-outline-success" type="submit">Submit</button>
             </form>
